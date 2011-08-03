@@ -1,0 +1,51 @@
+{%load tagger%}
+
+<style>
+#omnom_widget * { font-size: 12px; color: #666; font-family: Verdana,Arial,Helvetica,sans-serif; text-align: justify; border: none; padding: 0; margin: 0; text-align:left; vertical-align:top; background: #fff; font-weight: normal; }
+#omnom_widget div, #omnom_widget input, #omnom_widget p{ margin:0; padding:0; background: none; }
+#omnom_widget a { text-decoration: none; color: #4c846e; }
+#omnom_widget a[href]:hover { text-decoration: none; color: #000; }
+#omnom_widget .tagcontainer { font-size: 90%; width: 300px; float: right; margin-right: 10px; float: right;}
+#omnom_widget .taggedlink { color:   #09402a; }
+#omnom_widget .xfolkentry { overflow:  hidden; padding:  12px 0 12px 65px; }
+#omnom_widget div { margin: 4px 0px 0px 0px; }
+#omnom_widget { margin: 10px; border: 0; padding: 0; overflow:hidden; padding:12px 0 12px 10px; -moz-border-radius: 0.5em; -webkit-border-radius: 0.5em;}
+#omnom_widget [rel=tag] { background-color: #ddd; margin-left: 5px; margin-bottom: 2px; padding: 1px; float: right; }
+#omnom_widget [rel=tag]:hover { text-decoration: none; color: #fff; }
+#omnom_widget input, #omnom_widget textarea { border: 1px solid #0088DD; background: #FFFFFF; color: #666666; padding-right:10px; margin: 3px 0 0 0;}
+#omnom_widget .button { border: 1px solid #0088DD; background: #FFFFFF; color: #666666; padding: 0px 6px 0px 6px; margin: 4px; text-decoration: none; color: #666666;}
+#omnom_widget a { text-decoration: none; color: #0088dd; }
+#omnom_widget a[href]:hover { text-decoration: none; color: #000; }
+#omnom_widget input[type=text], #omnom_widget textarea { width: 97%; }
+#omnom_widget .suggestedTag { cursor: pointer ; color: #0088dd; }
+#omnom_widget .xfolkentry [rel=tag] {float: right; }
+#omnom_widget label { margin-right: 6px; }
+</style>
+<div id='omnom_widget' class="xfolkentry">
+<table><tbody>
+<tr><td><label for="id_title">Title</label></td><td ><strong><a class="taggedlink" href="{{item.url}}">{{item.title|safe}}</a></strong></td></tr>
+<tr><td><label for="id_notes">Notes</label></td><td><textarea name="notes" cols="40" rows="8" id="id_notes">{{item.notes|safe}}</textarea></td></tr>
+<tr><td><label for="id_tags">Tags</label></td><td>
+  <div class="meta">
+    <span class="tagcontainer">
+    {%for tag in item.tags%}
+        {%if baseurl == '/' %}
+        <a rel="tag" href="/t/{{tag}}">{{tag}}</a>
+        {%else%}
+        <a rel="tag" href="{{baseurl}}{%if tags%}+{%endif%}{{tag}}">{{tag}}</a>
+        {%endif%}
+    {%endfor%}
+    </span> ... on {{item.created}}
+  </div>
+</td></tr>
+<tr><td><label for="id_url">URL</label></td><td>{{item.url}}</td></tr>
+<tr><td><label for="id_url">Shorturl</label></td><td><a href="{% if request.is_secure %}https{% else %}http{% endif %}://{{request.get_host}}/r/{{item.shurl}}">{% if request.is_secure %}https{% else %}http{% endif %}://{{request.get_host}}/r/{{item.shurl}}</a></td></tr>
+<tr><td></td><td>
+  {%if user.username == item.user %}
+  <div>
+  <a href="{% if request.is_secure %}https{% else %}http{% endif %}://{{request.get_host}}/edit/{{item.url|urlencode}}">Edit</a> | <a href="{% if request.is_secure %}https{% else %}http{% endif %}://{{request.get_host}}/del/{{item.url|urlencode}}">Delete</a>{% if item.snapshot %} | <a href="{% if request.is_secure %}https{% else %}http{% endif %}://{{request.get_host}}/s/{{item.snapshot}}>Snapshot</a>{%endif%}
+  </div>
+  {%endif%}
+</td></tr>
+</tbody></table>
+</div>
