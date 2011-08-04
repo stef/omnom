@@ -68,6 +68,10 @@
 	<a href="{%root_url%}/purloin/{{item.seq}}">Purloin</a>
 	{% endif %}
   {%endif%}
+  {%if item.snapshot %}
+   <a href="{%root_url%}/s/{{item.snapshot}}">snapshot</a>
+  {%endif%}
+  <a href="{%root_url%}/r/{{item.seq|shorturl}}">shorturl</a>
   </div>
   <div><a class="taggedlink" href="{{item.url}}">{{item.title|safe}}</a></div>
   <div class="description">{{item.notes|safe}}</div>
@@ -82,7 +86,8 @@
     {%endfor%}
     </span>
 
-    <div><span class="datetime">{{item.created|date:"d/m/Y h:m:s"}}</span>{%if item.snapshot %} <a href="{%root_url%}/s/{{item.snapshot}}">snapshot</a>{%endif%}</div>
+
+    <div><span class="datetime">{{item.created|date:"d/m/Y h:m:s"}}</span></div>
   </div>
 </div>
 
@@ -92,7 +97,7 @@ Loading...
 </div>
 <div id="bibtexbox" class="dialog">
 	<textarea id="bibtextext" style="width: 100%; min-height: 200px;">
-	
+
 	</textarea>
 	<a onclick="$('#bibtexbox').hide('slow');">Close</a>
 </div>

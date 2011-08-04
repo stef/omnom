@@ -131,7 +131,7 @@
 
    function cloneDoc(srcnode,trgnode) {
       var thisNode=null;
-      for(i in srcnode.childNodes) {
+      for(var i=0;i<srcnode.childNodes.length;i++) {
          thisNode=srcnode.childNodes[i];
          // ignore <script> and anything id="omnom_.*'
          if((thisNode.tagName && thisNode.tagName.toLowerCase() == 'script' ) ||
@@ -156,7 +156,7 @@
          } else {
             var newnode=thisNode.cloneNode(false);
             trgnode.appendChild(newnode);
-            cloneDoc(thisNode,newnode);
+            if(thisNode.hasChildNodes()) cloneDoc(thisNode,newnode);
          }
       }
    }
@@ -228,7 +228,11 @@
               var style = store.contentDocument.createElement("style");
               style.media=elems[i].media.mediaText || 'all';
               //alert('link '+getXPath(elems[i].ownerNode).join('/'));
-              store.wrappedJSObject.contentDocument.getElementsByTagName("head")[0].appendChild(style);
+              if(!store.wrappedJSObject) {
+                 store.contentDocument.getElementsByTagName("head")[0].appendChild(style);
+              } else {
+                 store.wrappedJSObject.contentDocument.getElementsByTagName("head")[0].appendChild(style);
+              }
               styles.push(['',style]); // placeholder for async results
            } else {
               styles.push(['',storelems[i].ownerNode]); // placeholder for async results
@@ -243,7 +247,11 @@
              var stylelm = store.contentDocument.createElement("style");
              stylelm.media=elems[i].media.mediaText || 'all';
              //alert('style '+getXPath(elems[i].ownerNode).join('/'));
-             store.wrappedJSObject.contentDocument.getElementsByTagName("head")[0].appendChild(stylelm);
+              if(!store.wrappedJSObject) {
+                 store.contentDocument.getElementsByTagName("head")[0].appendChild(stylelm);
+              } else {
+                 store.wrappedJSObject.contentDocument.getElementsByTagName("head")[0].appendChild(stylelm);
+              }
              styles.push([style,stylelm]);
           } else {
              styles.push([style,storelems[i].ownerNode]);

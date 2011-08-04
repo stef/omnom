@@ -203,7 +203,9 @@ def add(request,url=None):
                        'tags' : ' '.join([unicode(x) for x in obj['tags']]),
                        'notes' : obj['notes'],
                        'private' : obj['private'],
-                       'popup' : form.cleaned_data['popup'] }
+                       }
+                if form.is_valid():
+                    data['popup']=form.cleaned_data.get('popup')
                 try:
                     suggestedTags=set(suggestTags(data['url']).keys())
                 except: suggestedTags=set()
@@ -220,7 +222,7 @@ def add(request,url=None):
         if hasattr(form, "cleaned_data"):
             tpl='add.html' if form.cleaned_data.get('popup','') == 1 else 'addWidget.html'
         else:
-            tpl='addWidget.html'
+            tpl='add.html'
         return render_to_response(tpl,
                                   { 'form': form,
                                     'suggestedTags': sorted(suggestedTags) },
@@ -329,11 +331,12 @@ def delete(request,url):
         user=User.objects.get(username=request.user)
         db = get_database()[Bookmark.collection_name]
         obj=db.find_one({'url':url, 'user': unicode(request.user)})
-        for hash in obj.get('snapshot',[]):
-            fname="%s/snapshots/%s" % (settings.BASE_PATH, hash)
-            if os.path.exists(fname):
-                os.unlink(fname)
-        db.remove({'url':url, 'user': unicode(request.user)})
+        if obj:
+            for hash in obj.get('snapshot',[]):
+                fname="%s/snapshots/%s" % (settings.BASE_PATH, hash)
+                if os.path.exists(fname):
+                    os.unlink(fname)
+                db.remove({'url':url, 'user': unicode(request.user)})
     except ObjectDoesNotExist:
         print "meh delete not working. user, url or obj not existing"
     return HttpResponseRedirect('/u/%s/' % request.user)
@@ -479,7 +482,10 @@ def bibtex(request, url):
 
 @gzip_page
 def getSnapshot(request, hash):
-    f=gzip.open("%s/snapshots/%s" % (settings.BASE_PATH, hash), 'rb')
+    try:
+        f=gzip.open("%s/snapshots/%s" % (settings.BASE_PATH, hash), 'rb')
+    except IOError:
+        raise Http404
     res=HttpResponse(f.read())
     f.close()
     return res

@@ -7,7 +7,6 @@
 {%block content%}
 <div class="xfolkentry">
   <div><a class="taggedlink" href="{{item.url}}">{{item.title|safe}}</a></div>
-  <div>"Shortish URL" <input type="text" width="30" value="{%root_url%}/r/{{item.shurl}}"></input></div>
   <div class="description">{{item.notes|safe}}</div>
   <div class="meta">
     <span class="tagcontainer">
@@ -21,7 +20,11 @@
     </span> ... on {{item.created}}
   </div>
   {%if user.username == item.user %}
-  <a href="{%root_url%}/edit/{{item.url|urlencode}}">Edit</a> | <a href="{%root_url%}/del/{{item.url|urlencode}}">Delete</a>{% if item.snapshot %} | <a href="{%root_url%}/s/{{item.snapshot}}>Snapshot</a>{%endif%}
+     <a href="{%root_url%}/edit/{{item.url|urlencode}}">Edit</a> | <a href="{%root_url%}/del/{{item.url|urlencode}}">Delete</a> |
+  {%endif%}
+  <a href="{%root_url%}/r/{{item.seq|shorturl}}">Shorturl</a>
+  {% if item.snapshot %}
+     | <a href="{%root_url%}/s/{{item.snapshot}}">Snapshot</a>
   {%endif%}
 </div>
 {%endblock%}
