@@ -112,7 +112,9 @@ def show(request,tags=[],user=None):
               'notes': unicode(unescape(obj['notes'])),
               'tags': obj['tags']
               } for obj in res.object_list]
-        return HttpResponse(json.dumps(res),mimetype="application/json")
+        if request.GET.get('j')==None:
+            return HttpResponse(json.dumps(res),mimetype="application/json")
+        return HttpResponse("var omnom_posts = "+json.dumps(res)+";",mimetype="text/javascript")
 
     if request.GET.get('format','') == 'atom':
         tpl='atom.xml'
