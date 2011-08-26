@@ -524,7 +524,7 @@
        // submit the form!
        GM_xmlhttpRequest({ method: 'POST',
 	                        url: '{% if request.is_secure %}https{% else %}http{% endif %}://{{request.get_host}}/add/?close=1',
-                           data: 'csrfmiddlewaretoken='+csrf+'&url='+url+'&title='+title+'&notes='+notes+'&page='+snapshot,
+                           data: 'csrfmiddlewaretoken='+csrf+'&url='+url+'&title='+title+'&notes='+notes+'&page='+snapshot+'&tags='+tags+'&private='+priv,
                            headers: [{'Content-type': 'application/x-www-form-urlencoded'}],
                            onload: submitForm
                          });
