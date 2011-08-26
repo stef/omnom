@@ -307,7 +307,7 @@
    function inlineSheet(sheet) {
      //alert('inline '+sheet.cssRules.length+'\n'+sheet.base);
      var ruleName=null;
-     if(!sheet.cssRules) { alert('no css rulez\n'+sheet+'\nbug bounty, pls send me this url'); return; }
+     if(!sheet.cssRules) { return; }
      for(var i=0; i < sheet.cssRules.length; i++) {
        if(sheet.cssRules[i].href) {
          //alert('fetch\n'+sheet.cssRules[i].href);
@@ -353,6 +353,7 @@
 
    function dumpCSS(sheet) {
      var txt='';
+     if(!sheet.cssRules) { return ''; }
      for(var i=0; i < sheet.cssRules.length; i++) {
        if(sheet.cssRules[i].styleSheet) {
          txt+='\n'+dumpCSS(sheet.cssRules[i].styleSheet);
@@ -484,7 +485,9 @@
          //alert(styles[i].base+'\n'+styles[i]);
          style.innerHTML=dumpCSS(styles[i][0]);
          //store.wrappedJSObject.contentDocument.getElementsByTagName("head")[0].appendChild(style);
-         styles[i][1].parentNode.replaceChild(style,styles[i][1]);
+         if(styles[i][1].parentNode) {
+            styles[i][1].parentNode.replaceChild(style,styles[i][1]);
+         }
        }
    }
 
