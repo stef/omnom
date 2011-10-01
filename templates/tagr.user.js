@@ -501,7 +501,7 @@
        var title=encodeURIComponent(window.parent.document.getElementById('id_title').value);
        var notes=encodeURIComponent(window.parent.document.getElementById('id_notes').value);
        var tags=encodeURIComponent(window.parent.document.getElementById('id_tags').value);
-       var priv=encodeURIComponent(window.parent.document.getElementById('id_private').value);
+       var priv=encodeURIComponent(window.parent.document.getElementById('id_private').checked);
        if(fetching) { // we don't wait for long timeouts.
           exportCSS();
        }
