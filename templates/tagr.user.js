@@ -18,7 +18,7 @@
 
 (function () {
    var store;
-   var delicious=true;
+   var delicious=false;
    var fetching=0;
    var csrfmiddlewaretoken='';
    var newsheets=[];
