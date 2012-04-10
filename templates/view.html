@@ -6,8 +6,8 @@
 
 {%block content%}
 <div class="xfolkentry">
-  <div><a class="taggedlink" href="{{item.url}}">{{item.title|safe}}</a></div>
-  <div class="description">{{item.notes|safe}}</div>
+  <div><a class="taggedlink" href="{{item.url}}">{{item.title|striptags}}</a></div>
+  <div class="description">{{item.notes|striptags|urlize|linebreaks}}</div>
   <div class="meta">
     <span class="tagcontainer">
     {%for tag in item.tags%}
@@ -26,5 +26,15 @@
   {% if item.snapshot %}
      | <a href="{%root_url%}/s/{{item.snapshot}}">Snapshot</a>
   {%endif%}
+  {% if item.rel %}
+    <span class="hoverhide">
+       <small>Related Bookmarks</small>
+       <ul class="related_bm">
+          {% for w, doc in item.rel %}
+          <li>{{w|floatformat:"-2"}} <a href="{{doc.shurl}}">{{doc.title}}</a></li>
+          {% endfor %}
+       </ul>
+    </span>
+  {% endif %}
 </div>
 {%endblock%}
