@@ -16,7 +16,7 @@
 		<category term="{{tag}}" scheme="http://www.sixapart.com/ns/types#category"/>
       {%endfor%}
 		<content type="html" xml:lang="en" xml:base="{%root_url%}/u/{{user}}"><![CDATA[
-      {{item.notes|safe}}
+      {{item.notes|striptags|urlize|linebreaks}}
 ]]></content>
 	</entry>
    {%endfor%}

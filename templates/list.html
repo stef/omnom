@@ -73,8 +73,8 @@
   {%endif%}
   <a href="{%root_url%}/r/{{item.seq|shorturl}}">shorturl</a>
   </div>
-  <div><a class="taggedlink" href="{{item.url}}">{{item.title|safe}}</a></div>
-  <div class="description">{{item.notes|safe}}</div>
+  <div><a class="taggedlink" href="{{item.url}}">{{item.title|striptags}}</a></div>
+  <div class="description">{{item.notes|striptags|urlize|linebreaks}}</div>
   <div class="meta">
     <span class="tagcontainer">
     {%for tag in item.tags%}
@@ -87,7 +87,19 @@
     </span>
 
 
-    <div><span class="datetime">{{item.created|date:"d/m/Y h:m:s"}}</span></div>
+    <div>
+       <span class="datetime">{{item.created|date:"d/m/Y h:m:s"}}</span>
+       {% if item.rel %}
+         <span class="hoverhide">
+         <small>Related Bookmarks</small>
+            <ul class="related_bm">
+               {% for w, doc in item.rel %}
+               <li>{{w|floatformat:"-2"}} <a href="{{doc.shurl}}">{{doc.title}}</a></li>
+               {% endfor %}
+            </ul>
+         </span>
+       {% endif %}
+    </div>
   </div>
 </div>
 
