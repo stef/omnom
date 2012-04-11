@@ -29,11 +29,7 @@
   <div class="meta">
     <span class="tagcontainer">
     {%for tag in item.tags%}
-        {%if baseurl == '/' %}
         <a rel="tag" href="/t/{{tag}}">{{tag}}</a>
-        {%else%}
-        <a rel="tag" href="{{baseurl}}{%if tags%}+{%endif%}{{tag}}">{{tag}}</a>
-        {%endif%}
     {%endfor%}
     </span> ... on {{item.created}}
   </div>
