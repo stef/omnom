@@ -335,11 +335,11 @@ def delete(request,url):
         obj=db.find_one({'url':url, 'user': unicode(request.user)})
         if obj:
             for hash in obj.get('snapshot',[]):
+                db.remove({'url':url, 'user': unicode(request.user)})
                 if not hash.strip(): continue
                 fname="%s/snapshots/%s" % (settings.BASE_PATH, hash)
                 if os.path.exists(fname):
                     os.unlink(fname)
-                db.remove({'url':url, 'user': unicode(request.user)})
     except ObjectDoesNotExist:
         print "meh delete not working. user, url or obj not existing"
     return HttpResponseRedirect('/u/%s/' % request.user)
