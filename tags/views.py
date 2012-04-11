@@ -332,14 +332,13 @@ def delete(request,url):
     try:
         user=User.objects.get(username=request.user)
         db = get_database()[Bookmark.collection_name]
-        obj=db.find_one({'url':url, 'user': unicode(request.user)})
-        if obj:
+        for obj in db.find({'url':url, 'user': unicode(request.user)}):
             for hash in obj.get('snapshot',[]):
-                db.remove({'url':url, 'user': unicode(request.user)})
                 if not hash.strip(): continue
                 fname="%s/snapshots/%s" % (settings.BASE_PATH, hash)
                 if os.path.exists(fname):
                     os.unlink(fname)
+            db.remove(obj)
     except ObjectDoesNotExist:
         print "meh delete not working. user, url or obj not existing"
     return HttpResponseRedirect('/u/%s/' % request.user)
