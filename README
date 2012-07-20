@@ -6,6 +6,9 @@ MongoDB >= 1.6.5
 python-pymongo
 django-registration
 django-mongokit
+django-tinymce
+lxml
+beautifulsoup
 
 ...
 
