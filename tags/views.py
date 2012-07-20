@@ -372,6 +372,14 @@ def load(request):
         form = ImportDeliciousForm()
     return render_to_response('import.html', { 'form': form, }, context_instance=RequestContext(request) )
 
+@gzip_page
+def export(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect("/accounts/login")
+    db = get_database()[Bookmark.collection_name]
+    return render_to_response('export.html',
+                              {'bookmarks': db.find({'user': request.user.username.encode('utf8')})},
+                              context_instance=RequestContext(request) )
 openCalaisParams=''.join(
     ['<c:params xmlns:c="http://s.opencalais.com/1/pred/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">',
      '<c:processingDirectives c:contentType="text/txt" c:enableMetadataType="SocialTags" c:outputFormat="application/json" c:docRDFaccesible="false" >',
