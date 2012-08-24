@@ -74,7 +74,7 @@ def show(request,tags=[],user=None):
     query={}
     if user and request.user==user:
         query['private']=True
-     else:
+    else:
         query['private']=False
     if user:
         query['user']=unicode(user)
