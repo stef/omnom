@@ -62,9 +62,9 @@ ROOT_URL = ''
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 if DEV_SERVER:
-    MEDIA_URL = ROOT_URL+'/site_media'
+    MEDIA_URL = ROOT_URL+'/site_media/'
 else:
-    MEDIA_URL = ROOT_URL+'/media'
+    MEDIA_URL = ROOT_URL+'/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
