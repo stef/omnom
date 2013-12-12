@@ -153,7 +153,7 @@ def fixApacheMadness(url):
 utmRe=re.compile('utm_(source|medium|campaign|content)=')
 def urlSanitize(url):
     # removes annoying UTM params to urls.
-    pcs=urlparse(urllib.unquote_plus(url))
+    pcs=urlparse(urllib.unquote(url))
     tmp=list(pcs)
     tmp[4]='&'.join(ifilterfalse(utmRe.match, pcs.query.split('&')))
     return urlunparse(tmp)
