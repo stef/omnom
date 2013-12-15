@@ -281,7 +281,7 @@ def getcsrf(request):
     try: user=User.objects.get(username=request.user)
     except ObjectDoesNotExist:
         return HttpResponseRedirect("/accounts/login")
-    return HttpResponse(str(csrf(request)['csrf_token']))
+    return HttpResponse(unicode(csrf(request)['csrf_token']))
 
 slugRe=re.compile(r'^[0-9A-Za-z]+$')
 def getItemByUrl(url):
