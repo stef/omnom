@@ -523,9 +523,9 @@
 
        // submit the form!
        GM_xmlhttpRequest({ method: 'POST',
-	                        url: '{% if request.is_secure %}https{% else %}http{% endif %}://{{request.get_host}}/add/?close=1',
-                           data: 'csrfmiddlewaretoken='+csrf+'&url='+url+'&title='+title+'&notes='+notes+'&page='+snapshot+'&tags='+tags+'&private='+priv,
-                           headers: [{'Content-type': 'application/x-www-form-urlencoded'}],
+	                        url: '{% if request.is_secure %}https{% else %}http{% endif %}://{{request.get_host}}/add/',
+                           data: 'csrfmiddlewaretoken='+csrfmiddlewaretoken+'&url='+url+'&title='+title+'&notes='+notes+'&page='+snapshot+'&tags='+tags+'&private='+priv,
+                           headers: {'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': csrfmiddlewaretoken},
                            onload: submitForm
                          });
        document.close();
