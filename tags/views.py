@@ -72,9 +72,7 @@ def show(request,tags=[],user=None):
 
     db = get_database()[Bookmark.collection_name]
     query={}
-    if user and request.user==user:
-        query['private']=True
-    else:
+    if not user or request.user!=user:
         query['private']=False
     if user:
         query['user']=unicode(user)
