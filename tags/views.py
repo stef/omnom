@@ -180,13 +180,10 @@ def purloin(request,id):
     return HttpResponseRedirect("/v/%s" % base62.from_decimal(obj['seq']))
 
 def add(request,url=None):
-    done=False
     if request.method == 'GET':
         form = AddBookmarkForm(request.GET)
     elif request.method == 'POST':
         form = AddBookmarkForm(request.POST)
-        if request.GET.get('close'):
-            done=True
     else:
         return HttpResponse("wrong method")
     try: user=User.objects.get(username=request.user)
@@ -271,7 +268,6 @@ def add(request,url=None):
     return HttpResponseRedirect("/v/%s?raw=1" % base62.from_decimal(obj['seq']))
 
 def getcsrf(request):
-    done=False
     if request.method == 'GET':
         form = AddBookmarkForm(request.GET)
     elif request.method == 'POST':
