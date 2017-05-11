@@ -15,6 +15,11 @@
 // @name           omnom bookmarking script
 // @namespace      omnom
 // @include       *
+// @grant GM_xmlhttpRequest
+// @grant unsafeWindow
+// @connect *
+// @noframes
+// ==/UserScript==
 
 (function () {
    var store;
@@ -26,7 +31,7 @@
    var console=unsafeWindow.console;
 
    makeFrame(gotFrame, 'store');
-   unsafeWindow.addEventListener('keydown', keyHandler, true);
+   window.addEventListener('keydown', keyHandler, true);
 
    function keyHandler(e) {
      if (e.keyCode == 68 && !e.shiftKey && e.ctrlKey && e.altKey && !e.metaKey) {
